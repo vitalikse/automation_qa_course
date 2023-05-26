@@ -4,6 +4,7 @@ from faker import Faker
 faker_eng = Faker('en_US')
 Faker.seed()
 
+
 def generated_person():
     yield Person(
         full_name=faker_eng.first_name() + " " + faker_eng.last_name(),
