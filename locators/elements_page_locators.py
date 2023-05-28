@@ -2,7 +2,6 @@ from selenium.webdriver.common.by import By
 
 
 class TextBoxPageLocators:
-
     # form fields
     FULL_NAME = (By.CSS_SELECTOR, "input[id='userName']")
     EMAIL = (By.CSS_SELECTOR, "input[id='userEmail']")
@@ -18,24 +17,22 @@ class TextBoxPageLocators:
 
 
 class CheckBoxPageLocators:
-
     EXPAND_ALL_BUTTON = (By.CSS_SELECTOR, "button[title='Expand all']")
     ITEMS_LIST = (By.CSS_SELECTOR, "span[class='rct-title']")
     CHECKED_ITEMS = (By.CSS_SELECTOR, "svg[class='rct-icon rct-icon-check']")
     TITLE_ITEM = (By.XPATH, ".//ancestor::span[@class='rct-text']")
     OUTPUT_RESULT = (By.CSS_SELECTOR, "span[class='text-success']")
 
+
 class RadioButtonPageLocators:
-
-
     YES_RADIO_BUTTON = (By.CSS_SELECTOR, ".custom-control-label[for='yesRadio']")
     # YES_RADIO_BUTTON = (By.XPATH, "//*[@id='yesRadio']")
     IMPRESSIVE_RADIO_BUTTON = (By.CSS_SELECTOR, ".custom-control-label[for='impressiveRadio']")
     NO_RADIO_BUTTON = (By.CSS_SELECTOR, ".custom-control-label[for='noRadio']")
     TEXT_OUTPUT = (By.CSS_SELECTOR, ".text-success")
 
-class WebTablePageLocators:
 
+class WebTablePageLocators:
     # add person form
     ADD_BUTTON = (By.CSS_SELECTOR, '#addNewRecordButton')
     FIRST_NAME_INPUT = (By.CSS_SELECTOR, 'input[id="firstName"]')
@@ -52,3 +49,8 @@ class WebTablePageLocators:
     SEARCH_INPUT = (By.CSS_SELECTOR, 'input[id="searchBox"]')
     DELETE_BUTTON = (By.CSS_SELECTOR, 'span[title="Delete"]')
     ROW_PARENT = (By.XPATH, ".//ancestor::div[@class='rt-tr-group']")
+    NO_ROWS_FOUND = (By.CSS_SELECTOR, 'div[class="rt-noData"]')
+    COUNT_ROW_LIST = (By.CSS_SELECTOR, 'select[aria-label="rows per page"]')
+    # update
+
+    UPDATE_BUTTON = (By.CSS_SELECTOR, 'span[title="Edit"]')
