@@ -2,7 +2,8 @@ import random
 import time
 
 from generator.generator import generated_person
-from locators.elements_page_locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators
+from locators.elements_page_locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators, \
+    WebTablePageLocators
 from pages.base_page import BasePage
 
 
@@ -32,9 +33,7 @@ class TextBoxPage(BasePage):
 
 
 class CheckBoxPage(BasePage):
-
     locators = CheckBoxPageLocators()
-
 
     def open_full_list(self):
         self.element_is_visible(self.locators.EXPAND_ALL_BUTTON).click()
@@ -63,8 +62,8 @@ class CheckBoxPage(BasePage):
             data.append(item.text.lower())
         return data
 
-class RadioButtonPage(BasePage):
 
+class RadioButtonPage(BasePage):
     locators = RadioButtonPageLocators()
 
     def click_radio_button(self, choice):
@@ -77,12 +76,44 @@ class RadioButtonPage(BasePage):
         radio_button.click()
         return radio_button.text
 
-        # time.sleep(5)
-        # self.element_is_present(self.locators.IMPRESSIVE_RADIO_BUTTON).click()
-        # time.sleep(5)
-        # self.element_is_present(self.locators.NO_RADIO_BUTTON).click()
-        # time.sleep(5)
-
     def get_output(self):
         return self.element_is_present(self.locators.TEXT_OUTPUT).text
 
+
+class WebTablePage(BasePage):
+    locators = WebTablePageLocators()
+
+    def add_new_person(self, count=1):
+        while count > 0:
+            person_info = next(generated_person())
+            firstname = person_info.firstname
+            lastname = person_info.lastname
+            email = person_info.email
+            age = person_info.age
+            salary = person_info.salary
+            department = person_info.department
+            self.element_is_visible(self.locators.ADD_BUTTON).click()
+            self.element_is_visible(self.locators.FIRST_NAME_INPUT).send_keys(firstname)
+            self.element_is_visible(self.locators.LAST_NAME_INPUT).send_keys(lastname)
+            self.element_is_visible(self.locators.EMAIL_INPUT).send_keys(email)
+            self.element_is_visible(self.locators.AGE_INPUT).send_keys(age)
+            self.element_is_visible(self.locators.SALARY_INPUT).send_keys(salary)
+            self.element_is_visible(self.locators.DEPARTMENT_INPUT).send_keys(department)
+            self.element_is_clickable(self.locators.SUBMIT_BUTTON).click()
+            count -= 1
+            return [firstname, lastname, str(age), email, str(salary), department]
+
+    def check_new_added_person(self):
+        people_list = self.elements_are_present(self.locators.FULL_PEOPLE_LIST)
+        data = []
+        for item in people_list:
+            data.append(item.text.splitlines())
+        return data
+
+    def search_some_person(self, key_word):
+        self.element_is_visible(self.locators.SEARCH_INPUT).send_keys(key_word)
+
+    def check_search_person(self):
+        delete_button = self.element_is_present(self.locators.DELETE_BUTTON)
+        row = delete_button.find_element(*self.locators.ROW_PARENT)
+        return row.text.splitlines()
